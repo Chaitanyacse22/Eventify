@@ -1,0 +1,819 @@
+<h1 style="color: aliceblue; text-align: center;">Welcome to the Admin Dashboard</h1> 
+
+<!-- <h1 style="color: aliceblue; text-align: center;">{{email}}</h1> --> 
+
+<div class="glas1 col-md-12"> 
+
+    <button class="btn btn-success" style="margin-left: 150px;" (click)="getAllEmployees()">Display Users</button> &nbsp; &nbsp; &nbsp; 
+
+    <button class="btn btn-danger" style="margin-left: 150px;" (click)="addEmployeeRecord()">Add User</button> &nbsp; &nbsp; &nbsp; 
+
+    <button class="btn btn-warning" style="margin-left: 150px;" (click)="monitorEvents()">Monitor Events</button> &nbsp; &nbsp; &nbsp; 
+
+    <button class ="btn btn-info" style="margin-left: 150px;" (click)="getAllRegistrations()">Total Registration</button> &nbsp; &nbsp; &nbsp; 
+
+    <button class ="btn btn-success" style="margin-left: 150px;" (click)="getallRevenue()">Total Revenue</button> 
+
+    <button class ="btn btn-success" style="margin-left: 150px;" (click)="manageDispute()">Manage Dispute</button>  
+
+</div> 
+
+    <br> 
+
+    <br> 
+
+    <table class="table table-hover table-bordered table-striped glass" *ngIf="first"> 
+
+        <thead style="text-align: center;"> 
+
+            <tr> 
+
+                <th> User ID </th> 
+
+                <th> Name </th> 
+
+                <th> Email </th> 
+
+                <th> Password </th> 
+
+                <th> Role </th> 
+
+                <th> Status </th> 
+
+                <th> Action </th> 
+
+                <!-- <th> Suspended</th> --> 
+
+                <!-- <th> Delete </th> --> 
+
+            </tr> 
+
+        </thead> 
+
+        <tbody style="text-align: center;"> 
+
+            <tr *ngFor="let user of empLst"> 
+
+                <td> {{user.id}} </td> 
+
+                <td> {{user.name}} </td> 
+
+                <td> {{user.email}} </td> 
+
+                <td> {{user.password}} </td> 
+
+                <td> {{user.role}} </td> 
+
+                <td><span [ngClass]="{'bg-success': user.status === 'Active', 'bg-danger': user.status !== 'Active', 'rounded': true}"> {{user.status}} </span></td> 
+
+                <td>&nbsp; &nbsp; 
+
+                    <!-- <button class="btn btn-outline-primary" style="border-radius: 10px; padding-right: 15px;" (click)="canActivate(user.id, user.status)"> Activate/Suspended </button> --> 
+
+                    <button class="btn btn-outline-success" style="border-radius: 10px; padding-right: 15px;" (click)="canActivate(user.id, user.status)"> Activate </button> &nbsp; &nbsp; &nbsp; 
+
+                    <button class="btn btn-outline-warning" style="border-radius: 10px;" (click)="canSuspended(user.id, user.status)"> Suspend </button> &nbsp; &nbsp; &nbsp; &nbsp; 
+
+                    <button class="btn btn-outline-danger" style="border-radius: 10px;" (click)="canDeactivate(user.id)"> Delete </button> 
+
+                    <!-- <button *ngIf="show==true" class="btn btn-outline-primary" style="border-radius: 10px; padding-right: 15px;" (click)="canRole()"> Show Events </button> --> 
+
+                </td> 
+
+                <!-- <td> 
+
+                  <button class="btn btn-outline-danger" style="border-radius: 10px;" (click)="canSuspended(user.id, user.status)"> Suspended </button> 
+
+                </td> --> 
+
+                <!-- <td> 
+
+                    <button class="btn btn-outline-danger" style="border-radius: 10px;" (click)="canDeactivate(user.id)"> Delete </button> 
+
+                </td> --> 
+
+            </tr> 
+
+        </tbody> 
+
+    </table> 
+
+ 
+
+    <!-- <table class="table table-hover table-bordered table-striped glass" *ngIf="third"> 
+
+      <thead> 
+
+        <tr> 
+
+          <th>Event ID</th> 
+
+          <th>Event Name</th> 
+
+          <th>Description</th> 
+
+          <th>Event Type</th> 
+
+          <th>Date</th> 
+
+          <th>Location</th> 
+
+          <th>Price</th> 
+
+          <th>Status</th> 
+
+          <th>Organizer ID</th> 
+
+          <th>Created At</th> 
+
+          <th>Updated At</th> 
+
+        </tr> 
+
+      </thead> 
+
+      <tbody> 
+
+        <tr *ngFor="let even of eventLst"> 
+
+          <td>{{even.id}}</td> 
+
+          <td>{{even.title}}</td> 
+
+          <td>{{even.description}}</td> 
+
+          <td>{{even.type}}</td> 
+
+          <td>{{even.date}}</td> 
+
+          <td>{{even.location}}</td> 
+
+          <td>{{even.price}}</td> 
+
+          <td>{{even.status}}</td> 
+
+          <td>{{even.organizer_id}}</td> 
+
+          <td>{{even.created_at}}</td> 
+
+          <td>{{even.updated_at}}</td> 
+
+        </tr> 
+
+      </tbody> 
+
+      </table> --> 
+
+ 
+
+      <div  *ngIf="third" class="row"> 
+
+        <div class="col-md-4" *ngFor="let even of eventLst"> 
+
+          <!-- Card for each event --> 
+
+          <div class="card mb-2"> 
+
+            <img [src]="even.image" class="card-img-top" alt="Event Image" style="height: 200px; object-fit: cover;" /> 
+
+             
+
+            <div class="card-body"> 
+
+              <h5 class="card-title">{{ even.title }}</h5> 
+
+              <p class="card-text"><strong>Event ID:</strong> {{ even.id }}</p> 
+
+              <p class="card-text">{{ even.description }}</p> 
+
+              <p class="card-text"><strong>Type:</strong> {{ even.type }}</p> 
+
+              <p class="card-text"><strong>Price:</strong> {{ even.price | currency:'INR':'symbol' }}</p> 
+
+              <p class="card-text"><strong>Date:</strong> {{ even.date | date: 'short' }}</p> 
+
+              <p class="card-text"><strong>Location:</strong> {{ even.location }}</p> 
+
+              <p class="card-text"><strong>Status:</strong> {{ even.status }}</p> 
+
+              <p class="card-text"><strong>Organizer ID:</strong> {{ even.organizer_id }}</p> 
+
+            </div> 
+
+          </div> 
+
+        </div> 
+
+      </div> 
+
+ 
+
+    <div class="glass2" *ngIf="DisplayAddOrEditForm == true && second==true" id="registrationForm"> 
+
+      <h2>{{strAddOrEditDisplayTitle}}</h2> <hr> 
+
+      <form [formGroup]="UserForm" (ngSubmit)="AddOrEditUserRecord()"> 
+
+          <!-- User ID: <br> 
+
+          <input type="text" name="id" formControlName="id"/> <br> <br> --> 
+
+ 
+
+          Name : <br> 
+
+          <input style="border-radius: 10px;" type="text" name="name" formControlName="name"/> <br> <br> 
+
+ 
+
+          Email : <br> 
+
+          <input style="border-radius: 10px;" type="text" name="email" formControlName="email"/> <br> <br> 
+
+ 
+
+          Password : <br> 
+
+          <input style="border-radius: 10px;" type="text" name="password" formControlName="password"/> <br> <br> 
+
+ 
+
+          Role : <br> 
+
+          <input style="border-radius: 10px;" type="text" name="role" formControlName="role"/> <br> <br> 
+
+ 
+
+          Status : <br> 
+
+          <input style="border-radius: 10px;" type="text" name="status" formControlName="status"/> <br> <br> 
+
+ 
+
+          <button style="border-radius: 10px; margin-left: 80px;" class="btn btn-primary" type="submit">Submit</button> 
+
+ 
+
+      </form> 
+
+  </div> 
+
+ 
+
+  <table class="table table-hover table-bordered bg-transparent" *ngIf="r5"> 
+
+    <thead> 
+
+      <tr> 
+
+        <th>Registration ID</th> 
+
+        <th>User ID</th> 
+
+        <th>Event ID</th> 
+
+        <th>Email</th> 
+
+        <th>Registration Date</th> 
+
+        <th>Payment Status</th> 
+
+        <th>Confirm</th> 
+
+        <th>Dispute</th> 
+
+        <th>Comment</th> 
+
+        <th>Rating</th> 
+
+        <th>Action</th> 
+
+      </tr> 
+
+    <tbody> 
+
+      <tr *ngFor="let reg of registrationList"> 
+
+        <td>{{ reg.id }}</td> 
+
+        <td>{{ reg.userId }}</td> 
+
+        <td>{{ reg.eventId }}</td> 
+
+        <td>{{ reg.email }}</td> 
+
+        <td>{{ reg.registration_date | date: 'short' }}</td> 
+
+        <td>{{ reg.payment_status }}</td> 
+
+        <td>{{ reg.confirm ? 'Yes' : 'No' }}</td> 
+
+        <td>{{ reg.dispute}}</td>  
+
+        <td>{{ reg.feedback || 'No Feedback' }}</td> 
+
+        <td>{{ reg.rating}}</td> 
+
+        <td><button class="btn btn-outline-danger" (click)="oneditbutton(reg)">Dispute</button></td> 
+
+      </tr> 
+
+    </tbody> 
+
+  </table> 
+
+ 
+
+  <div class="container border p-3 rounded rounded-3 w-25 m-auto wow" *ngIf="bdisplayFeedbackform== true && r6==true"> 
+
+    <h2 class="text-center text-white title">{{ straddoreditdisplay }}</h2> 
+
+    <form [formGroup]="paymentForms" (ngSubmit)="addoreditemployeerecord()"> 
+
+      <div class="form-group"> 
+
+        <label for="dispute" class="form-label title">Dispute: </label> 
+
+        <textarea id="dispute" formControlName="dispute" class="form-control" rows="4"></textarea> 
+
+      </div> 
+
+    <br>    
+
+        <button class="btn btn-outline-danger btns" style="margin-left: 40%;">Submit</button> 
+
+      </form> 
+
+  </div> 
+
+ 
+
+ 
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->  
+
+ 
+
+<br> 
+
+<br> 
+
+<!-- <h2 style="text-align: center; color: aliceblue;" *ngIf="r1">Total Registrations and Revenue Generated per Event</h2> 
+
+<table class="table table-bordered table-hover table-striped mt-4" *ngIf="r1"> 
+
+   
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>Event ID</th>  
+
+ 
+
+      <th>Total Registrations</th>  
+
+ 
+
+      <th>Total Revenue</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of registrations">  
+
+ 
+
+      <td>{{registration.eventId}}</td>  
+
+ 
+
+      <td>{{registration.registrationCount}}</td>  
+
+ 
+
+      <td>{{registration.totalRevenue}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table> --> 
+
+ 
+
+<h2 *ngIf="r1">Total Registrations and Revenue Generated per Event</h2> 
+
+<canvas *ngIf="r1" class="glas1" baseChart 
+
+        [data]="eventRevenueBarChartData" 
+
+        [options]="eventRevenueBarChartOptions" 
+
+        [type]="'bar'" 
+
+        style="width: 50%; height: 50%;"> 
+
+</canvas> 
+
+ 
+
+<br> 
+
+ 
+
+<!-- <div class="glas1 col-md-12"> 
+
+<h2 style="text-align: center; color: aliceblue;" *ngIf="r2">Revenue Generated for all Organizers</h2>  
+
+ 
+
+<table class="table table-bordered table-hover table-striped mt-4" *ngIf="r2"> 
+
+ 
+
+ 
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>Organizer ID</th>  
+
+ 
+
+      <th>Total Revenue</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of allrevenue">  
+
+ 
+
+      <td>{{registration.organizerId}}</td>  
+
+ 
+
+      <td>{{registration.totalRevenue}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table>  
+
+</div> --> 
+
+ 
+
+<h2 *ngIf="r2">Revenue Generated for all Organizers</h2> 
+
+<canvas *ngIf="r2" class="glas1" baseChart 
+
+        [data]="eventRevenueLineChartData" 
+
+        [options]="eventRevenueLineChartOptions" 
+
+        [type]="'line'" 
+
+        style="width: 50%; height: 50%;"> 
+
+</canvas> 
+
+ 
+
+ 
+
+<br><br> 
+
+<!-- <h2>Revenue Generated for Organizer</h2>  
+
+ 
+
+<div>  
+
+ 
+
+  <label for="organizerId">Enter Organizer ID: </label> &nbsp;  
+
+ 
+
+  <input type="number" id="organizerId" [(ngModel)]="organizerId" placeholder="Enter Organizer ID">  
+
+ 
+
+</div>  
+
+ 
+
+  
+
+ 
+
+<br> <button class ="btn btn-outline-info" (click)="getOrganizerRevenue()">Organizer Revenue</button>  
+
+ 
+
+  
+
+ 
+
+<table class="table table-bordered table-hover table-striped mt-4">  
+
+ 
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>Organizer ID</th>  
+
+ 
+
+      <th>Total Revenue</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of organizerrevenue">  
+
+ 
+
+      <td>{{registration.organizerId}}</td>  
+
+ 
+
+      <td>{{registration.totalRevenue}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table>  --> 
+
+<br><br> 
+
+<div class="glas1 col-md-12"> 
+
+<div class="mb-3"> 
+
+ 
+
+  <h2 style="text-align: center; color: aliceblue;" *ngIf="r3">Revenue Generated for Organizer on Specific Event</h2>  
+
+ 
+
+  <label for="organizerId">Enter Organizer ID: </label> &nbsp;  
+
+ 
+
+  <input type="number" id="organizerId" [(ngModel)]="organizerId1" placeholder="Enter Organizer ID">  
+
+ 
+
+</div>  
+
+ 
+
+  
+
+ 
+
+<div class="form-group d-flex align-items-center">  
+
+ 
+
+  <label for="eventType" class="form-label me-3">Enter Event Type: </label>  
+
+ 
+
+  <input type="text" id="eventType" [(ngModel)]="eventType" placeholder="Enter Event Type" class="form-control  w-50">  
+
+ 
+
+</div> 
+
+<br> 
+
+ 
+
+<button class="btn btn-outline-danger" (click)="geteventTypeRevenue()">Get Revenue</button>  
+
+ 
+
+  
+
+ 
+
+<table class="table table-bordered table-hover table-striped mt-4" *ngIf="r3">  
+
+ 
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>Organizer ID</th>  
+
+ 
+
+      <th>Event Type</th>  
+
+ 
+
+      <th>Total Revenue</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of eventTyperevenue">  
+
+ 
+
+      <td>{{registration.organizerId}}</td>  
+
+ 
+
+      <td>{{registration.eventType}}</td>  
+
+ 
+
+      <td>{{registration.totalRevenue}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table>  
+
+</div> 
+
+<br><br> 
+
+<!-- <div class="glas1 col-md-12"> 
+
+<div> 
+
+  <h2 style="text-align: center; color: aliceblue;" *ngIf="r4">Total Registrations happened on Particular Day</h2><br>  
+
+ 
+
+  <label for="organizerId">Enter Particular Date : </label>&nbsp;  
+
+ 
+
+  <input type="date" id="organizerId1" [(ngModel)]="Date" placeholder="Enter particular date">  
+
+ 
+
+</div>  
+
+<br> 
+
+ 
+
+<button class="btn btn-outline-warning mt-4" (click)="getRegistrationCount()">Get Count Registrations</button>  
+
+ 
+
+  
+
+ 
+
+<table class="table table-bordered table-hover table-striped mt-4" *ngIf="r4">  
+
+ 
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>No. Of Registrations</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of organizerDate">  
+
+ 
+
+      <td>{{registration.registrationCount}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table> 
+
+</div> --> 

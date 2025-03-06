@@ -1,0 +1,361 @@
+body{ 
+
+    background-image: url('../public/back.jpg'); 
+
+    /* background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); */ 
+
+    background-repeat: repeat; 
+
+    background-size: 100% 100vh; 
+
+    /* display: flex; 
+
+    align-items: center; 
+
+    justify-content: center; 
+
+    place-items: center; 
+
+    margin: 0; 
+
+    width: 100vw; 
+
+    height: 100vh; 
+
+    position: static; */ 
+
+    background-position: fixed; 
+
+  } 
+
+  .glass { 
+
+    /* margin-top: 100px; */ 
+
+    width: 200px; 
+
+    height: 600px; 
+
+    /* margin-left: 800px; */ 
+
+    position: relative; 
+
+    border-radius: 20px; 
+
+    box-sizing: border-box; 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    border-radius: 15px; 
+
+    padding: 20px; 
+
+    backdrop-filter: blur(10px); 
+
+    -webkit-backdrop-filter: blur(10px); 
+
+    border: 2px solid rgba(255, 255, 255, 0.2); 
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+    color: #fff; 
+
+    font-size: 17px; 
+
+    /* animation: float 3s ease-in-out infinite; */ 
+
+  } 
+
+  .h{ 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    backdrop-filter: blur(10px); 
+
+  } 
+
+  .glas { 
+
+    /* margin-top: 100px; */ 
+
+    width: 80%; 
+
+    height: 100%; 
+
+    /* margin-left: 800px; */ 
+
+    position: relative; 
+
+    border-radius: 20px; 
+
+    box-sizing: border-box; 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    border-radius: 15px; 
+
+    padding: 20px; 
+
+    backdrop-filter: blur(10px); 
+
+    -webkit-backdrop-filter: blur(10px); 
+
+    border: 2px solid rgba(255, 255, 255, 0.2); 
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+    color: #fff; 
+
+    font-size: 17px; 
+
+    /* animation: float 3s ease-in-out infinite; */ 
+
+  } 
+
+  .glas1 { 
+
+    /* margin-top: 100px; */ 
+
+    width: 100%; 
+
+    height: 100%; 
+
+    /* margin-left: 800px; */ 
+
+    position: relative; 
+
+    border-radius: 20px; 
+
+    box-sizing: border-box; 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    border-radius: 15px; 
+
+    padding: 20px; 
+
+    backdrop-filter: blur(10px); 
+
+    -webkit-backdrop-filter: blur(10px); 
+
+    border: 2px solid rgba(255, 255, 255, 0.2); 
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+    color: #fff; 
+
+    font-size: 17px; 
+
+    /* animation: float 3s ease-in-out infinite; */ 
+
+  } 
+
+ 
+
+  .glass2 { 
+
+    margin-top: 100px; 
+
+    width: 350px; 
+
+    height: 600px; 
+
+    margin-left: 800px; 
+
+    position: relative; 
+
+    border-radius: 20px; 
+
+    box-sizing: border-box; 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    border-radius: 15px; 
+
+    padding: 20px; 
+
+    backdrop-filter: blur(10px); 
+
+    -webkit-backdrop-filter: blur(10px); 
+
+    border: 2px solid rgba(255, 255, 255, 0.2); 
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+    color: #fff; 
+
+    font-size: 17px; 
+
+    /* animation: float 3s ease-in-out infinite; */ 
+
+  } 
+
+ 
+
+  .glass1 { 
+
+    margin-top: 200px; 
+
+    width: 100%; 
+
+    height: 100%; 
+
+    background: rgba(255, 255, 255, 0.1); 
+
+    border-radius: 15px; 
+
+    padding: 20px; 
+
+    backdrop-filter: blur(10px); 
+
+    -webkit-backdrop-filter: blur(10px); 
+
+    border: 2px solid rgba(255, 255, 255, 0.2); 
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+
+    color: #fff; 
+
+    font-size: 17px; 
+
+    /* animation: float 3s ease-in-out infinite; */ 
+
+  } 
+
+ 
+
+  /* Container for the flip card */ 
+
+.card-container { 
+
+    perspective: 1000px; /* Enables 3D effect */ 
+
+    margin-bottom: 30px; 
+
+  } 
+
+   
+
+  /* Card itself */ 
+
+  .card { 
+
+    position: relative; 
+
+    width: 100%; 
+
+    height: 350px; 
+
+    transform-style: preserve-3d; 
+
+    transition: transform 0.5s; 
+
+    cursor: pointer; 
+
+  } 
+
+   
+
+  /* Flip the card when clicked */ 
+
+  .card.flip { 
+
+    transform: rotateY(180deg); 
+
+  } 
+
+   
+
+  /* Front face: Shows the event image */ 
+
+  .card .card-front { 
+
+    position: absolute; 
+
+    width: 100%; 
+
+    height: 100%; 
+
+    backface-visibility: hidden; /* Hides back side while flipped */ 
+
+    display: flex; 
+
+    justify-content: center; 
+
+    align-items: center; 
+
+  } 
+
+   
+
+  .card .card-front img { 
+
+    width: 100%; 
+
+    height: 100%; 
+
+    object-fit: cover; 
+
+  } 
+
+   
+
+  /* Back face: Shows the event details */ 
+
+  .card .card-back { 
+
+    position: absolute; 
+
+    width: 100%; 
+
+    height: 100%; 
+
+    backface-visibility: hidden; 
+
+    transform: rotateY(180deg); 
+
+    background-color: #fff; 
+
+    padding: 20px; 
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+    border-radius: 10px; 
+
+    display: flex; 
+
+    flex-direction: column; 
+
+    justify-content: space-between; 
+
+  } 
+
+   
+
+  .card .card-back .card-body { 
+
+    overflow-y: auto; 
+
+  } 
+
+   
+
+  /* Responsive for small screens */ 
+
+  @media (max-width: 768px) { 
+
+    .card { 
+
+      height: 300px; 
+
+    } 
+
+   
+
+    .card-back { 
+
+      padding: 15px; 
+
+    } 
+
+  } 

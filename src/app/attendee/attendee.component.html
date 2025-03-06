@@ -1,0 +1,533 @@
+<h1 style="color: aliceblue; text-align: center;">Welcome to the Attendee Dashboard</h1> 
+
+<!-- <h1 style="color: aliceblue; text-align: center;">{{email}}</h1> --> 
+
+<button class="btn btn-outline-primary" (click)="getAllEvents()">Display Event data</button> &nbsp; 
+
+<button class="btn btn-outline-success" (click)="getRegistrationsByUser()">Display Registration Data</button> 
+
+<br><br> 
+
+ 
+
+<!-- Table for displaying event details-->  
+
+<!-- <table class="table table-hover bg-transparent" *ngIf="first"> 
+
+  <thead> 
+
+    <tr> 
+
+      <th>Event ID</th> 
+
+      <th>Title</th> 
+
+      <th>Description</th> 
+
+      <th>Type</th> 
+
+      <th>Date</th> 
+
+      <th>Location</th> 
+
+      <th>Price</th> 
+
+      <th>Status</th> 
+
+      <th>Organizer ID</th> 
+
+      <th>Register</th> 
+
+    </tr> 
+
+    
+
+    <tr> 
+
+      <th></th> 
+
+      <th></th> 
+
+      <th></th> 
+
+      <th> 
+
+         
+
+        <select [(ngModel)]="selectedType" (change)="applyFilters()"> 
+
+          <option value="">All</option> 
+
+          <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option> 
+
+        </select> 
+
+      </th> 
+
+      <th> 
+
+         
+
+        <input type="date" [(ngModel)]="selectedDate" (change)="applyFilters()" /> 
+
+      </th> 
+
+      <th> 
+
+         
+
+        <select [(ngModel)]="selectedLocation" (change)="applyFilters()"> 
+
+          <option value="">All</option> 
+
+          <option *ngFor="let location of eventLocations" [value]="location">{{ location }}</option> 
+
+        </select> 
+
+      </th> 
+
+      <th></th> 
+
+      <th></th> 
+
+      <th></th> 
+
+      <th></th> 
+
+    </tr> 
+
+  </thead> 
+
+  <tbody> 
+
+    <tr *ngFor="let emp of filteredEventList"> 
+
+      <td>{{emp.id}}</td> 
+
+      <td>{{emp.title}}</td> 
+
+      <td>{{emp.description}}</td> 
+
+      <td>{{emp.type}}</td> 
+
+      <td>{{emp.date}}</td> 
+
+      <td>{{emp.location}}</td> 
+
+      <td>{{emp.price}}</td> 
+
+      <td>{{emp.status}}</td> 
+
+      <td>{{emp.organizer_id}}</td> 
+
+      <td> 
+
+        <button class="btn btn-outline-success" (click)="onRegisterButton(emp.id)">Register</button> 
+
+      </td> 
+
+    </tr> 
+
+  </tbody> 
+
+</table>  --> 
+
+ 
+
+  <!-- Filter Section --> 
+
+  <div class="row mb-3"> 
+
+    <div class="col-md-3"> 
+
+      <!-- Filter by Event Type --> 
+
+      <select [(ngModel)]="selectedType" (change)="applyFilters()" class="form-control"> 
+
+        <option value="">All Types</option> 
+
+        <option *ngFor="let type of eventTypes" [value]="type">{{ type }}</option> 
+
+      </select> 
+
+    </div> 
+
+   
+
+    <div class="col-md-3"> 
+
+      <!-- Filter by Event Date --> 
+
+      <input type="date" [(ngModel)]="selectedDate" (change)="applyFilters()" class="form-control" /> 
+
+    </div> 
+
+   
+
+    <div class="col-md-3"> 
+
+      <!-- Filter by Event Location --> 
+
+      <select [(ngModel)]="selectedLocation" (change)="applyFilters()" class="form-control"> 
+
+        <option value="">All Locations</option> 
+
+        <option *ngFor="let location of eventLocations" [value]="location">{{ location }}</option> 
+
+      </select> 
+
+    </div> 
+
+  </div> 
+
+ 
+
+<div *ngIf="bDisplayData == true" class="row"> 
+
+    <div class="col-md-4" *ngFor="let even of filteredEventList"> 
+
+      <!-- Card for each event --> 
+
+      <div class="card mb-2"> 
+
+        <img [src]="even.image" class="card-img-top" alt="Event Image" style="height: 200px; object-fit: cover;" /> 
+
+         
+
+        <div class="card-body"> 
+
+          <h5 class="card-title">{{ even.title }}</h5> 
+
+          <p class="card-text"><strong>Event ID:</strong> {{ even.id }}</p> 
+
+          <p class="card-text">{{ even.description }}</p> 
+
+          <p class="card-text"><strong>Type:</strong> {{ even.type }}</p> 
+
+          <p class="card-text"><strong>Price:</strong> {{ even.price | currency:'INR':'symbol' }}</p> 
+
+          <p class="card-text"><strong>Date:</strong> {{ even.date | date: 'short' }}</p> 
+
+          <p class="card-text"><strong>Location:</strong> {{ even.location }}</p> 
+
+          <p class="card-text"><strong>Status:</strong> {{ even.status }}</p> 
+
+          <p class="card-text"><strong>Organizer ID:</strong> {{ even.organizer_id }}</p> 
+
+           
+
+          <!-- Edit and Delete buttons --> 
+
+          <button class="btn btn-outline-success" (click)="onRegisterButton(even.id)">Register</button> 
+
+        </div> 
+
+      </div> 
+
+    </div> 
+
+  </div> 
+
+   
+
+ 
+
+<table class="table table-hover bg-transparent" *ngIf="second"> 
+
+  <thead> 
+
+    <tr> 
+
+      <th>Registration ID</th> 
+
+      <th>User ID</th> 
+
+      <th>Event ID</th> 
+
+      <th>Email</th> 
+
+      <th>Registration Date</th> 
+
+      <th>Payment Status</th> 
+
+      <th>Confirm</th> 
+
+      <th>Dispute</th> 
+
+      <th>Comment</th> 
+
+      <th>Rating</th> 
+
+      <th>Action</th> 
+
+    </tr> 
+
+  <tbody> 
+
+    <tr *ngFor="let reg of registrationList"> 
+
+      <td>{{ reg.id }}</td> 
+
+      <td>{{ reg.userId }}</td> 
+
+      <td>{{ reg.eventId }}</td> 
+
+      <td>{{ reg.email }}</td> 
+
+      <td>{{ reg.registration_date | date: 'short' }}</td> 
+
+      <td>{{ reg.payment_status }}</td> 
+
+      <td>{{ reg.confirm ? 'Yes' : 'No' }}</td> 
+
+      <!-- <td>{{ reg.dispute ? 'Yes' : 'No' }}</td> --> 
+
+      <td>{{ reg.dispute}}</td>  
+
+      <td>{{ reg.feedback || 'No Feedback' }}</td> 
+
+      <td>{{ reg.rating}}</td> 
+
+      <td> 
+
+        <!-- Action button, could be for viewing details or editing --> 
+
+        <button class="btn btn-outline-danger" (click)="oneditbutton(reg)">Feedback</button> 
+
+        <button class="btn btn-outline-danger" (click)="ondeletebutton(reg.id)">Delete</button> 
+
+      </td> 
+
+    </tr> 
+
+  </tbody> 
+
+</table> 
+
+ 
+
+  <!-- Event Registration Form, shown after the 'Register' button is clicked --> 
+
+<div *ngIf="bdisplayaddoredirform == true" id="registration"> 
+
+  <h2>{{straddoreditdisplaytitle}}</h2> 
+
+   
+
+  <form [formGroup]="paymentForms" (ngSubmit)="addoreditemployeerecord()"> 
+
+    <div class="form-group"> 
+
+      <label for="userId" class="form-label">User ID:</label> 
+
+      <input type="number" id="userId" formControlName="userId" class="form-control" 
+
+        title="Enter your User ID" placeholder="e.g., 12345" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group"> 
+
+      <label for="event_id" class="form-label">Event ID:</label> 
+
+      <input type="number" id="event_id" formControlName="event_id" class="form-control" 
+
+        title="Enter the Event ID" placeholder="e.g., 101" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group"> 
+
+      <label for="email" class="form-label">Email:</label> 
+
+      <input type="email" id="email" formControlName="email" class="form-control" 
+
+        title="Enter a valid email address" placeholder="e.g., user@example.com" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group"> 
+
+      <label for="registration_date" class="form-label">Registration Date:</label> 
+
+      <input type="datetime-local" id="registration_date" formControlName="registration_date" class="form-control" 
+
+        title="Select registration date and time" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group"> 
+
+      <label class="form-label">Payment Status:</label> 
+
+      <div> 
+
+        <label> 
+
+          <input type="radio" formControlName="payment_status" value="debitcard" title="Select if you paid by Debit Card" /> Debit Card 
+
+        </label> 
+
+        <label> 
+
+          <input type="radio" formControlName="payment_status" value="creditcard" title="Select if you paid by Credit Card" /> Credit Card 
+
+        </label> 
+
+        <label> 
+
+          <input type="radio" formControlName="payment_status" value="upi" title="Select if you paid by UPI" /> UPI 
+
+        </label> 
+
+      </div> 
+
+    </div> 
+
+   
+
+    <div class="form-group"> 
+
+      <label for="confirm" class="form-label">Confirm:</label> 
+
+      <input type="checkbox" id="confirm" formControlName="confirm" title="Check to confirm the payment" /> 
+
+    </div> 
+
+   
+
+    <!-- Disable the fields based on registration mode --> 
+
+    <div class="form-group" *ngIf="!isRegistrationMode"> 
+
+      <label for="dispute" class="form-label">Dispute:</label> 
+
+      <input type="text" id="dispute" formControlName="dispute" class="form-control" 
+
+        title="Enter the dispute if applicable" placeholder="e.g., Payment not processed" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group" *ngIf="!isRegistrationMode"> 
+
+      <label for="rating" class="form-label">Rating:</label> 
+
+      <input type="number" id="rating" formControlName="rating" class="form-control" min="1" max="5" 
+
+        title="Rate the service between 1 to 5" placeholder="1-5" /> 
+
+    </div> 
+
+   
+
+    <div class="form-group" *ngIf="!isRegistrationMode"> 
+
+      <label for="feedback" class="form-label">Feedback:</label> 
+
+      <textarea id="feedback" formControlName="feedback" class="form-control" 
+
+        title="Provide any additional feedback" placeholder="Enter your feedback here..."></textarea> 
+
+    </div> 
+
+   
+
+    <button type="submit" class="btn btn-primary">Submit</button> 
+
+  </form> 
+
+</div> 
+
+ 
+
+ 
+
+<div class="container border p-3 rounded rounded-3 w-25 m-auto wow" *ngIf="bdisplayFeedbackform"> 
+
+    <h2 class="text-center text-white title">{{ straddoreditdisplaytitle }}</h2> 
+
+    <form [formGroup]="paymentForms" (ngSubmit)="addoreditemployeerecord()"> 
+
+      <div class="form-group"> 
+
+        <label for="dispute" class="form-label title">Dispute: </label> 
+
+        <textarea id="dispute" formControlName="dispute" class="form-control" rows="4"></textarea> 
+
+      </div> 
+
+ 
+
+      <div class="form-group"> 
+
+        <label for="feedback" class="form-label title">Feedback: </label> 
+
+        <textarea id="feedback" formControlName="feedback" class="form-control" rows="4"></textarea> 
+
+      </div> 
+
+   
+
+      <div class="form-group"> 
+
+        <label for="rating" class="form-label title">Rating: </label> 
+
+   
+
+        <!-- Input field to enter rating (number from 1 to 5) --> 
+
+        <input type="number" formControlName="rating" class="form-control" [value]="rating" 
+
+          (input)="onRatingChange($event)" min="1" max="5" required/> 
+
+   
+
+        <div class="star-rating"> 
+
+          <!-- Displaying 5 stars. Clicking on a star updates the rating --> 
+
+          <span *ngFor="let star of stars; let i = index" (click)="setRating(i + 1)"> 
+
+            <i [ngClass]="i < rating ? 'bi bi-star-fill' : 'bi bi-star'" class="star-icon"> &nbsp; 
+
+            </i> 
+
+          </span> 
+
+        </div> 
+
+      </div> 
+
+  <br> 
+
+   
+
+      <button class="btn btn-outline-danger btns" style="margin-left: 40%;">Submit</button> 
+
+    </form> 
+
+</div> 
+
+ 
+
+<button (click)="checkEventStartTimes()"> 
+
+    check 
+
+  </button> 
+
+  <div class="toast-container"> 
+
+    <p class="Eventstarttime">{{ customToastMessage }}</p> 
+
+  </div> 

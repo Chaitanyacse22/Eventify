@@ -1,0 +1,533 @@
+<!-- <h1 style="color: aliceblue; text-align: center;">Welcome to the Organizer Dashboard</h1> --> 
+
+<!-- <h1 style="color: aliceblue; text-align: center;">{{email}}</h1> --> 
+
+ 
+
+<marquee class="glas1" style="padding: 8px; color: rgb(9, 235, 223); font-size: 20px;" behavior="" direction="">Welcome to the Organizer Dashboard</marquee> 
+
+<br><br> 
+
+<div id="carouselExample" class="carousel slide glas1" data-bs-ride="carousel" data-bs-wrap="true" data-bs-interval="3000"> 
+
+    <div class="carousel-indicators"> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button> 
+
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="5" aria-label="Slide 6"></button> 
+
+    </div> 
+
+    <div class="carousel-inner"> 
+
+        <div class="carousel-item active"> 
+
+            <img src="image (1).jfif" class="d-block w-100" alt="Slide 1"> 
+
+        </div> 
+
+        <div class="carousel-item"> 
+
+            <img src="image (2).jfif" class="d-block w-100" alt="Slide 2"> 
+
+        </div> 
+
+        <div class="carousel-item"> 
+
+            <img src="image (3).jfif" class="d-block w-100" alt="Slide 3"> 
+
+        </div> 
+
+        <div class="carousel-item"> 
+
+            <img src="image (4).jfif" class="d-block w-100" alt="Slide 4"> 
+
+        </div> 
+
+        <div class="carousel-item"> 
+
+            <img src="c1.jpg" class="d-block w-100" alt="Slide 5"> 
+
+        </div> 
+
+        <div class="carousel-item"> 
+
+            <img src="c2.jpg" class="d-block w-100" alt="Slide 6"> 
+
+        </div> 
+
+    </div> 
+
+ 
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"> 
+
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+
+        <span class="visually-hidden">Previous</span> 
+
+    </button> 
+
+ 
+
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"> 
+
+        <span class="carousel-control-next-icon" aria-hidden="true"></span> 
+
+        <span class="visually-hidden">Next</span> 
+
+    </button> 
+
+</div> <br> <br> 
+
+<div class="glas1 col-md-12"> 
+
+<button class="btn btn-primary" style="margin-left: 500px;" (click)="getEvents();displayData()">Show All Events</button> &nbsp; 
+
+<button class="btn btn-danger" style="margin-left: 150px;" (click)="addEventRecord()">Add New Event</button> &nbsp; 
+
+<button class="btn btn-warning" style="margin-left: 150px;" (click)="getRegisteredList(); displayData()"> Track Registered User</button> 
+
+</div> 
+
+<!-- <button class="btn btn-warning" (click)="getRegisteredList()"> Track Registered User</button> --> 
+
+<!-- <div *ngIf="bDisplayData==true"> 
+
+<table class="table table-hover table-bordered" > 
+
+  <thead> 
+
+    <tr> 
+
+      <th>Event ID</th> 
+
+      <th>Event Name</th> 
+
+      <th>Description</th> 
+
+      <th>Event Type</th> 
+
+      <th>Date</th> 
+
+      <th>Location</th> 
+
+      <th>Price</th> 
+
+      <th>Status</th> 
+
+      <th>Organizer ID</th> 
+
+      <th>Created At</th> 
+
+      <th>Updated At</th> 
+
+      <th>Image</th> 
+
+      <th>Edit/Delete</th> 
+
+    </tr> 
+
+  </thead> 
+
+  <tbody> 
+
+    <tr *ngFor="let even of eventLst"> 
+
+      <td>{{even.id}}</td> 
+
+      <td>{{even.title}}</td> 
+
+      <td>{{even.description}}</td> 
+
+      <td>{{even.type}}</td> 
+
+      <td>{{even.date}}</td> 
+
+      <td>{{even.location}}</td> 
+
+      <td>{{even.price}}</td> 
+
+      <td>{{even.status}}</td> 
+
+      <td>{{even.organizer_id}}</td> 
+
+      <td>{{even.created_at}}</td> 
+
+      <td>{{even.updated_at}}</td> 
+
+      <td>{{even.image}}</td> 
+
+      <td> 
+
+        <button class="btn btn-outline-primary" (click)="OnEditEventRecord(even)">Edit</button> &nbsp; 
+
+        <button class="btn btn-outline-primary" (click)="OnDeleteEventRecord (even.id)">Delete</button> 
+
+      </td> 
+
+    </tr> 
+
+  </tbody> 
+
+ 
+
+  </table></div> --> 
+
+  <div *ngIf="bDisplayData == true" class="row"> 
+
+    <div class="col-md-2" *ngFor="let even of eventLst"> 
+
+      <div class="card mb 2"> 
+
+         
+
+        <img [src]="even.image" class="card-img-top" alt="Event Image" style="height: 200px; object-fit: cover;"/> 
+
+        <!-- <img [src]="'/assets/' + even.image" class="card-img-top" alt="Event Image" style="height: 200px; object-fit: cover;" /> --> 
+
+      
+
+        <div class="card-body"> 
+
+           
+
+          <h5 class="card-title">{{ even.title }}</h5> 
+
+          <p class="card-text"><strong>Event ID:</strong>{{ even.id }}</p> 
+
+          <p class="card-text">{{ even.description }}</p> 
+
+          <p class="card-text"><strong>Type:</strong>{{ even.type }}</p> 
+
+          <p class="card-text"><strong>Price:</strong> {{ even.price | currency:'INR':'symbol' }}</p> 
+
+          <p class="card-text"><strong>Date:</strong> {{ even.date | date: 'short' }}</p> 
+
+          <p class="card-text"><strong>Location:</strong> {{ even.location }}</p> 
+
+          <p class="card-text"><strong>Status:</strong> {{ even.status }}</p> 
+
+          <p class="card-text"><strong>Organizer_id:</strong> {{ even.organizer_id }}</p> 
+
+          <button class="btn btn-outline-primary" (click)="OnEditEventRecord(even)">Edit</button> &nbsp; 
+
+          <button class="btn btn-outline-danger" (click)="OnDeleteEventRecord(even.id)">Delete</button> 
+
+        </div> 
+
+      </div> 
+
+      <br> 
+
+    </div> 
+
+  </div> 
+
+   
+
+  <div *ngIf="bDisplayAddOrEditForm==true" id="registrationForm"> 
+
+    <h2> {{strAddOrEditDisplayTitle}}</h2> 
+
+    <form [formGroup]="EventForm" (ngSubmit)="AddOrEditEventRecord()"> 
+
+ 
+
+      Event Name: <br> 
+
+      <input type="text" name="title" formControlName="title"><br><br> 
+
+      Description: <br> 
+
+      <input type="text" name="description" formControlName="description"><br><br> 
+
+      Event Type: <br> 
+
+      <input type="text" name="type" formControlName="type"><br><br> 
+
+      Date: <br> 
+
+      <input type="date" name="date" formControlName="date"><br><br> 
+
+      Location: <br> 
+
+      <input type="text" name="location" formControlName="location"><br><br> 
+
+      Price:<br> 
+
+      <input type="text" name="price" formControlName="price" ><br><br> 
+
+      Status: <br> 
+
+      <input type="text" name="status" formControlName="status"><br><br> 
+
+      Organizer ID:<br> 
+
+      <input type="text" name="organizer_id" formControlName="organizer_id"><br><br> 
+
+      Created Time:<br> 
+
+      <input type="datetime-local" name="created_at" formControlName="created_at"><br><br> 
+
+      Updated Time: <br> 
+
+      <input type="datetime-local" name="updated_at" formControlName="updated_at"><br><br> 
+
+      Image: <br> 
+
+      <input type="text" name="image" formControlName="image"><br><br> 
+
+      <button class="btn btn-primary" type="submit">Submit</button> 
+
+    </form>  
+
+   </div> 
+
+ 
+
+<div *ngIf="bDisplayData==true"> 
+
+<table class="table table-hover table-bordered" > 
+
+  <thead> 
+
+    <tr> 
+
+      <th>Registration Id</th> 
+
+      <th>User Id</th> 
+
+      <th>Event Id</th> 
+
+      <th>Registration Date</th> 
+
+      <th>Payment Status</th> 
+
+      <th>Email</th> 
+
+      <th>Updates</th> 
+
+    </tr> 
+
+  </thead> 
+
+  <tbody> 
+
+    <tr *ngFor="let reg of regLst"> 
+
+      <td>{{reg.id}}</td> 
+
+      <td>{{reg.userId}}</td> 
+
+      <td>{{reg.eventId}}</td> 
+
+      <td>{{reg.registration_date}}</td> 
+
+      <td>{{reg.payment_status}}</td> 
+
+      <td>{{reg.email}}</td> 
+
+      <td> 
+
+        <!-- <button class="btn btn-outline-info" (click)="sendEventUpdates()">Send Update</button> --> 
+
+        <button class="btn btn-primary" (click)="getStatus(reg.id)">Send Update</button> 
+
+        <div *ngIf="showCustomToast" class="custom-toast"> 
+
+          {{ customToastMessage }} 
+
+        </div> 
+
+ 
+
+      </td> 
+
+ 
+
+    </tr> 
+
+    
+
+  </tbody> 
+
+ 
+
+ </table> </div> 
+
+ 
+
+ <h2>Revenue Generated for Organizer</h2>  
+
+<!--  
+
+<div>  
+
+ 
+
+  <label for="organizerId">Enter Organizer ID: </label> &nbsp;  
+
+ 
+
+  <input id="organizerId" [value]="userId" placeholder="Enter Organizer ID">  
+
+ 
+
+</div>  --> 
+
+ 
+
+  
+
+ 
+
+<br> <button class ="btn btn-outline-info" (click)="getOrganizerRevenue()">Organizer Revenue</button>  
+
+ 
+
+  
+
+ 
+
+<table class="table table-bordered table-hover table-striped mt-4">  
+
+ 
+
+  <thead>  
+
+ 
+
+    <tr>  
+
+ 
+
+      <th>Organizer ID</th>  
+
+ 
+
+      <th>Total Revenue</th>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </thead>  
+
+ 
+
+  <tbody>  
+
+ 
+
+    <tr *ngFor="let registration of organizerrevenue">  
+
+ 
+
+      <td>{{registration.organizerId}}</td>  
+
+ 
+
+      <td>{{registration.totalRevenue}}</td>  
+
+ 
+
+    </tr>  
+
+ 
+
+  </tbody>  
+
+ 
+
+</table> 
+
+ 
+
+<div class="glas1 col-md-12"> 
+
+    <div> 
+
+      <h2 style="text-align: center; color: aliceblue;" *ngIf="r4">Total Registrations happened on Particular Day</h2><br>  
+
+     
+
+      <label for="organizerId">Enter Particular Date : </label>&nbsp;  
+
+     
+
+      <input type="date" id="organizerId1" [(ngModel)]="Date" placeholder="Enter particular date">  
+
+     
+
+    </div>  
+
+    <br> 
+
+     
+
+    <button class="btn btn-outline-warning mt-4" (click)="getRegistrationCount()">Get Count Registrations</button>  
+
+     
+
+      
+
+     
+
+    <table class="table table-bordered table-hover table-striped mt-4" *ngIf="r4">  
+
+     
+
+      <thead>  
+
+     
+
+        <tr>  
+
+     
+
+          <th>No. Of Registrations</th>  
+
+     
+
+        </tr>  
+
+     
+
+      </thead>  
+
+     
+
+      <tbody>  
+
+     
+
+        <tr *ngFor="let registration of organizerDate">  
+
+     
+
+          <td>{{registration.registrationCount}}</td>  
+
+     
+
+        </tr>  
+
+     
+
+      </tbody>  
+
+     
+
+    </table> 
+
+    </div> 

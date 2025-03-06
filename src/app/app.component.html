@@ -1,0 +1,333 @@
+<nav class="navbar h"> 
+
+  <a href="" class="navbar-brand" style="margin-left: 0px;"><i class="fa-brands fa-grav"></i>Welcome to the Eventify App</a> 
+
+  <div class="container"> 
+
+      <ul class="nav nav-pills"> 
+
+          <li class="nav-item"> 
+
+              <a class="nav-link" style="color: black;" *ngIf="role=='Admin'" routerLinkActive="active" routerLink="/admin">Admin</a> 
+
+          </li> 
+
+ 
+
+          <li class="nav-item"> 
+
+              <a class="nav-link" style="color: black;" *ngIf="role=='Organizer' || role=='Admin'" routerLinkActive="active" routerLink="/organizer">Organizer</a> 
+
+          </li> 
+
+ 
+
+          <li class="nav-item"> 
+
+              <a class="nav-link" style="color: black;" *ngIf="role=='Attendee' || role=='Admin'" routerLinkActive="active" routerLink="/attendee">Attendee</a> 
+
+          </li> 
+
+ 
+
+          <li class="nav-item"> 
+
+              <a class="nav-link" style="color: black;" routerLinkActive="active" routerLink="/aboutus">About Us</a> 
+
+          </li> &nbsp; &nbsp; 
+
+      </ul> 
+
+  </div> 
+
+  <span style="margin-left: -500px; color: rgb(8, 8, 8);  "><i class="fa-solid fa-envelope" *ngIf="icon==true"></i>&nbsp; <i>{{Email}}</i></span> &nbsp; &nbsp; &nbsp; 
+
+  <button *ngIf="role=='Attendee'" class="btn btn-outline-primary">Notification</button> &nbsp; &nbsp; 
+
+  <button class="btn btn-outline-primary" (click)="userLoggedIn()">Log In</button> &nbsp; &nbsp; 
+
+  <button class="btn btn-outline-primary" (click)="userLoggedOut()">Log Off</button> &nbsp; &nbsp; 
+
+</nav> 
+
+<br> <br> 
+
+<!-- <div id="loginform" class="glass2" *ngIf="login1==true"> 
+
+  <h2>Login Form</h2> 
+
+  <form #loginform="ngForm" (ngSubmit)="onSubmitTemplateDriven(loginform)"> 
+
+      UserId : <br> 
+
+      <input type="text" name="userId" ngModel/> <br> <br> 
+
+      <div *ngIf="userId?.invalid && (userId?.dirty || userId?.touched)"> 
+
+          <div *ngIf="userId?.errors?.['required']"> <h4> User Id is not entered...</h4> </div> 
+
+      </div> 
+
+ 
+
+      Password : <br> 
+
+      <input type="text" name="pwd" ngModel/> <br> <br> 
+
+      <div *ngIf="pwd?.invalid && (pwd?.dirty ||pwd?.touched)"> 
+
+          <div *ngIf="pwd?.errors?.['required']"><h4>Password is not entered...</h4></div> 
+
+          <div *ngIf="pwd?.errors?.['minlength']"><h4> Password has to be 5 chars minimum ... </h4></div> 
+
+      </div> 
+
+ 
+
+      <button class="btn btn-outline-primary" type="submit">Login</button> &nbsp; &nbsp; &nbsp; &nbsp; 
+
+      <button class="btn btn-outline-primary" type="submit" (click)="toggleForm1()">Registration</button> 
+
+      <h3 *ngIf="loginuser==true">{{strLoginFormResult}}</h3> 
+
+  </form> 
+
+</div> --> 
+
+ 
+
+<div class="container glass1" style="width: 25%;" id="loginform" *ngIf="login1==true"> 
+
+  <h2 style="text-align: center; color: black;">Login</h2> 
+
+  <div class="form-group"> 
+
+    <label for="email" style="color: black;">Email:</label> 
+
+    <input type="email" id="email" name="email" #emailModel="ngModel" [(ngModel)]="email" class="form-control" placeholder="Enter email" required email/> 
+
+    <div *ngIf="emailModel.invalid && emailModel.touched"> 
+
+      <small class="text-danger" *ngIf="emailModel.errors?.['required']">Email is required.</small> 
+
+      <small class="text-danger" *ngIf="emailModel.errors?.['minlength']">Please enter a valid email address.</small> 
+
+    </div> 
+
+  </div> 
+
+ 
+
+  <div class="form-group"> 
+
+    <label for="password" style="color: black;">Password:</label> 
+
+    <input type="password" id="password" name="password" #passwordModel="ngModel" [(ngModel)]="password" class="form-control" placeholder="Enter password" required minlength="6"/> 
+
+    <div *ngIf="passwordModel.invalid && passwordModel.touched"> 
+
+      <small class="text-danger" *ngIf="passwordModel.errors?.['required']">Password is required.</small> 
+
+      <small class="text-danger" *ngIf="passwordModel.errors?.['minlength']">Password must be at least 6 characters.</small> 
+
+    </div> 
+
+  </div> 
+
+ 
+
+  <div class="form-group"> 
+
+    <label for="role" style="color: black;">Role:</label> 
+
+    <select id="role" [(ngModel)]="role" name="role" class="form-select" placeholder="Enter Role"> 
+
+      <option value="Attendee">Attendee</option> 
+
+      <option value="Organizer">Organizer</option> 
+
+      <option value="Admin">Admin</option> 
+
+    </select> 
+
+    <div *ngIf="role == null"> 
+
+      <small class="text-danger">Please select a role.</small> 
+
+    </div> 
+
+  </div> 
+
+  <br>  
+
+ 
+
+  <button class="btn btn-primary" style="margin-left: 100px;" (click)="login()" [disabled]="emailModel.invalid || passwordModel.invalid || !role">Login</button> &nbsp; &nbsp;  &nbsp; &nbsp; 
+
+  <button class="btn btn-outline-primary" type="submit" (click)="toggleForm1()">Registration</button> 
+
+ 
+
+  <h2>{{ loginMessage }}</h2> 
+
+</div> 
+
+ 
+
+<br> 
+
+ 
+
+<div class="glass2" *ngIf="DisplayAddOrEditForm == true" id="registrationForm"> 
+
+  <h2 style="text-align: center;">Register User</h2> <hr> 
+
+  <form [formGroup]="UserForm" style="text-align: center;" (ngSubmit)="addUser()"> 
+
+      <!-- User ID: <br> 
+
+      <input type="text" name="id" formControlName="id"/> <br> <br> --> 
+
+ 
+
+      Name : <br> 
+
+      <input style="border-radius: 10px;" type="text" name="name" formControlName="name"/> <br> <br> 
+
+      <div *ngIf="UserForm.get('name')?.invalid && UserForm.get('name')?.touched"> 
+
+        <small class="text-danger" *ngIf="UserForm.get('name')?.errors?.['required']">Name is required.</small> 
+
+        <small class="text-danger" *ngIf="UserForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters.</small> 
+
+      </div> 
+
+ 
+
+      Email : <br> 
+
+      <input style="border-radius: 10px;" type="text" name="email" formControlName="email"/> <br> <br> 
+
+      <div *ngIf="UserForm.get('email')?.invalid && UserForm.get('email')?.touched"> 
+
+        <small class="text-danger" *ngIf="UserForm.get('email')?.errors?.['required']">Email is required.</small> 
+
+        <small class="text-danger" *ngIf="UserForm.get('email')?.errors?.['email']">Please enter a valid email address.</small> 
+
+      </div> 
+
+ 
+
+      Password : <br> 
+
+      <input style="border-radius: 10px;" type="text" name="password" formControlName="password"/> <br> <br> 
+
+      <div *ngIf="UserForm.get('password')?.invalid && UserForm.get('password')?.touched"> 
+
+        <small class="text-danger" *ngIf="UserForm.get('password')?.errors?.['required']">Password is required.</small> 
+
+        <small class="text-danger" *ngIf="UserForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</small> 
+
+      </div> 
+
+ 
+
+      Role : <br> 
+
+      <input style="border-radius: 10px;" type="text" name="role" formControlName="role"/> <br> <br> 
+
+ 
+
+      Status : <br> 
+
+      <input style="border-radius: 10px;" type="text" name="status" formControlName="status"/> <br> <br> 
+
+ 
+
+      <button style="border-radius: 10px; margin-left: 20px;" class="btn btn-primary" type="submit">Submit</button> &nbsp; &nbsp;  &nbsp; &nbsp; 
+
+      <button type="button" class="btn btn-danger" (click)="toggleForm1()">Login</button> 
+
+ 
+
+  </form> 
+
+</div> 
+
+ 
+
+<!-- <div id="registrationform" class="glass2" *ngIf="registration1==true"> 
+
+<h2>Registration Form</h2> 
+
+<div id="registrationForm"> 
+
+  <form [formGroup]="registrationForm" (ngSubmit)="RegistrationFormSubmit()"> 
+
+      User ID : <br> 
+
+      <input type="text" name="userId" formControlName="userId"/> <br><br> 
+
+ 
+
+      <div *ngIf="userId?.invalid && (userId?.dirty || userId?.touched)"> 
+
+          <div *ngIf="userId?.errors?.['required']"> <h4> User Id is not entered...</h4> </div> 
+
+      </div> 
+
+ 
+
+      Password : <br> 
+
+      <input type="text" name="pwd" formControlName="pwd"/> <br> <br> 
+
+ 
+
+      <div *ngIf="pwd?.invalid && (pwd?.dirty ||pwd?.touched)"> 
+
+          <div *ngIf="pwd?.errors?.['required']"><h4>Password is not entered...</h4></div> 
+
+          <div *ngIf="pwd?.errors?.['minlength']"><h4> Password has to be 5 chars minimum ... </h4></div> 
+
+          <div *ngIf="pwd?.errors?.['invalidPassword']"><h4> Password must start with Chai... </h4></div> 
+
+ 
+
+      </div> 
+
+ 
+
+      Confirm Password : <br> 
+
+      <input type="text" name="confirmPwd" formControlName="confirmPwd"/> <br> <br> 
+
+ 
+
+      <div *ngIf="confirmPwd?.invalid && (pwd?.dirty ||pwd?.touched)"> 
+
+          <div *ngIf="confirmPwd?.errors?.['required']"><h4>Password is not entered...</h4></div> 
+
+          <div *ngIf="confirmPwd?.errors?.['minlength']"><h4> Password has to be 5 chars minimum ... </h4></div> 
+
+          <div *ngIf="confirmPwd?.errors?.['invalidPassword']"><h4> Password must start with Chai... </h4></div> 
+
+      </div> 
+
+ 
+
+      <button class="btn btn-outline-primary" type="submit">Registration</button> &nbsp; &nbsp; &nbsp; &nbsp; 
+
+      <button type="button" class="btn btn-danger" (click)="toggleForm1()">Login</button> 
+
+  </form> 
+
+  {{strRegistrationMsg}} 
+
+</div> 
+
+</div> --> 
+
+ 
+
+  <router-outlet></router-outlet> 
